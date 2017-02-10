@@ -1,0 +1,5 @@
+node_modules
+.idea
+.svn
+npm_debug
+temp.json

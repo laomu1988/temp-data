@@ -19,7 +19,7 @@ module.exports = function(path, defaultData, _config) {
     var config = _.extend({}, defaultConfig, _config);
 
     function save() {
-        console.log('save', config.timeout);
+        // console.log('save', config.timeout);
         var old_hash = this.__hash;
         delete this.__hash;
         var new_hash = hash(this);

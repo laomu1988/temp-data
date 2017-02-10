@@ -4,7 +4,7 @@
 
 ## 安装
 ```sh
-npm install temp-db -s
+npm install temp-data --save
 ```
 
 ## 使用

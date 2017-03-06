@@ -1,6 +1,6 @@
 {
   "name": "temp-data",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "简单的临时数据存放，数据操作和普通对象一样简单",
   "main": "index.js",
   "scripts": {

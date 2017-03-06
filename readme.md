@@ -10,11 +10,14 @@ npm install temp-data --save
 ## 使用
 ```js
 var db = require('temp-data');
-var temp = db(__dirname + '/temp.json',{
-    count: 0
-},{
-    timeout: 100
-});
+var temp = db(__dirname + '/temp.json',
+    {
+        count: 0
+    },
+    {
+        timeout: 100
+    }
+);
 
 if(!temp.count)  temp.count = 0;
 // 统计程序启动的次数
@@ -22,13 +25,14 @@ temp.count += 1;
 temp.$save();
 ```
 
-## 参数
+## 函数及参数
 * 初始化
     - path:        保存数据的路径
     - defaultData: 默认数据
     - config      配置对象
         - timeout: 保存数据延迟时间,避免短时间内重复操作，单位ms，默认10000ms
-* $save 比较当前数据是否改变，假如改变则存储到本地。 其中使用的lodash的节流函数，无需担心短时间内多次操作
+* $save(isRightNow) 比较当前数据是否改变，假如改变则存储到本地。 其中使用的lodash的节流函数，无需担心短时间内多次操作
+    - isRightNow:  是否立即存储(不使用节流函数),默认false
 
 
 ## 注意事项：

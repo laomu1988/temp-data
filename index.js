@@ -14,11 +14,19 @@ var defaultConfig = {
 /**
  * 新建存储对象
  */
-module.exports = function(path, defaultData, _config) {
-    var data = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : defaultData || {};
+module.exports = function (path, defaultData, _config) {
+    var data;
+    try {
+        data = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : defaultData || {};
+    } catch (err) {
+        data = defaultData;
+    }
+
     var config = _.extend({}, defaultConfig, _config);
+    var hasNoSave = false;
 
     function save() {
+        hasNoSave = false;
         // console.log('save', config.timeout);
         var old_hash = this.__hash;
         delete this.__hash;
@@ -30,9 +38,17 @@ module.exports = function(path, defaultData, _config) {
         fs.writeFileSync(path, json, 'utf8');
     }
 
-    data.$save = _.throttle(save.bind(data), config.timeout, {
+    var saveTimer = _.throttle(save.bind(data), config.timeout, {
         leading: true,
         trailing: true
+    });
+    data.$save = function (isRightNow) {
+        hasNoSave = true;
+        isRightNow ? save() : saveTimer();
+    };
+
+    process.on('beforeExit', function () {
+        if (hasNoSave) save();
     });
     // data.$save();
     return data;

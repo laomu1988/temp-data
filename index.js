@@ -25,7 +25,7 @@ module.exports = function (path, defaultData, _config) {
     var config = _.extend({}, defaultConfig, _config);
     var hasNoSave = false;
 
-    function save() {
+    var save = function() {
         hasNoSave = false;
         // console.log('save', config.timeout);
         var old_hash = this.__hash;
@@ -36,9 +36,9 @@ module.exports = function (path, defaultData, _config) {
         }
         var json = JSON.stringify(this);
         fs.writeFileSync(path, json, 'utf8');
-    }
+    }.bind(data);
 
-    var saveTimer = _.throttle(save.bind(data), config.timeout, {
+    var saveTimer = _.throttle(save, config.timeout, {
         leading: true,
         trailing: true
     });

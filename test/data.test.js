@@ -15,7 +15,7 @@ data.$save();
 data.c = 1;
 setTimeout(function() {
     console.log('after interval');
-    data.$save();
+    data.$save(true);
     var newObj = temp(path, defaultData);
     if (data.count != newObj.count) throw new Error('count not equal...');
     if (data.list.length != newObj.list.length) throw new Error('list not equal');
